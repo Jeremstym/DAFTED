@@ -5796,7 +5796,7 @@ files = [
     {file = "wadler_lindig-0.1.6.tar.gz", hash = "sha256:8b6adad9718291a7d82fb088a596b93659ce2346321ca76819810affbc66102b"},
 ]
 
-[#package.source]
+#[package.source]
 #type = "directory"
 #url = "vital"
 
