@@ -1,0 +1,101 @@
+_target_: torch.nn.Sequential
+_args_:
+  - _target_: collections.OrderedDict
+
+    # convolution:
+    #   _target_: didactic.models.layers.TS_Patching
+    #   in_features: ${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}}
+    #   out_features: ${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}}
+    #   kernel_size: 8
+    #   stride: 4
+    #   padding: 0
+
+    expand_feat_dim:
+      _target_: dataprocessing.models.layers.Lambda
+      fn:
+        _target_: torch.unsqueeze
+        _partial_: True
+      dim: -1
+
+    upsampling:
+      _target_: torch.nn.Linear
+      in_features: 1
+      out_features: ${task.embed_dim}
+
+    positional_encoding_channel_wise:
+      _target_: didactic.models.layers.PositionalEncoding
+      sequence_len: ${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}}
+      d_model: ${task.embed_dim}
+
+    reshape_tensor:
+      _target_: dataprocessing.models.layers.Lambda
+      fn:
+        _target_: torch.reshape
+        _partial_: True
+      shape: ${tuple:-1,${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}},${task.embed_dim}}
+
+    transformer_encoder_channel_wise:
+      _target_: torch.nn.TransformerEncoder
+      num_layers: 1
+
+      norm:
+        _target_: torch.nn.LayerNorm
+        normalized_shape: ${task.embed_dim}
+
+      encoder_layer:
+        _target_: torch.nn.TransformerEncoderLayer
+        d_model: ${task.embed_dim}
+        nhead: 2
+        dim_feedforward: ${task.embed_dim}
+        dropout: 0.3
+        activation: relu
+        batch_first: True
+        norm_first: False
+
+    sequence_pooling:
+      _target_: didactic.models.layers.SequencePooling
+      d_model: ${task.embed_dim}
+
+    reshape_tensor_back:
+      _target_: dataprocessing.models.layers.Lambda
+      fn:
+        _target_: torch.reshape
+        _partial_: True
+      shape: ${tuple:-1,${task.time_series_tokenizer.resample_dim},${task.embed_dim}}
+
+    downsamplig:
+      _target_: didactic.models.layers.TS_Patching
+      in_features: ${task.embed_dim}
+      out_features: ${task.embed_dim}
+      transpose: True
+      kernel_size: 16
+      stride: 8
+      padding: 0
+
+    positional_encoding_time_wise:
+      _target_: didactic.models.layers.PositionalEncoding
+      sequence_len: 7 #${task.time_series_tokenizer.resample_dim}
+      d_model: ${task.embed_dim}
+
+    transformer_encoder_time_wise:
+      _target_: torch.nn.TransformerEncoder
+      num_layers: 1
+
+      norm:
+        _target_: torch.nn.LayerNorm
+        normalized_shape: ${task.embed_dim}
+
+      encoder_layer:
+        _target_: torch.nn.TransformerEncoderLayer
+        d_model: ${task.embed_dim}
+        nhead: 4
+        dim_feedforward: ${task.embed_dim}
+        dropout: 0.3
+        activation: relu
+        batch_first: True
+        norm_first: False
+
+    # linear_pooling:
+    #   _target_: didactic.models.layers.LinearPooling
+    #   n_tokens: ${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}}
+    #   d_token: ${task.embed_dim}

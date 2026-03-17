@@ -1,0 +1,35 @@
+# @package _global_
+
+task:
+  tabular_attrs:
+    # Tabular attributes without echo features
+    - age
+    - sex
+    - bmi
+    - hf
+    - cad
+    - pad
+    - stroke
+    - tobacco
+    - diabetes
+    - dyslipidemia
+    - etiology
+    - ddd
+    - bradycardic
+    - ace_inhibitor
+    - arb
+    - tz_diuretic
+    - central_acting
+    - beta_blocker
+    - spironolactone
+    - alpha_blocker
+    - ccb
+    - sbp_24
+    - dbp_24
+    - pp_24
+    - creat
+    - gfr
+    - nt_probnp
+    - nt_probnp_group
+
+  time_series_attrs: ${data.process_patient_kwargs.time_series_attrs}

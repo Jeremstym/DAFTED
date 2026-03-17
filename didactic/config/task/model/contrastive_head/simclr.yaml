@@ -1,0 +1,5 @@
+_target_: lightly.models.modules.SimCLRProjectionHead
+
+input_dim: ${task.embed_dim}
+hidden_dim: ${task.embed_dim}
+output_dim: ${task.embed_dim}

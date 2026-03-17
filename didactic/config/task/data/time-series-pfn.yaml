@@ -1,0 +1,5 @@
+# @package _global_
+
+task:
+  tabular_attrs: [diagnosis]
+  time_series_attrs: ${data.process_patient_kwargs.time_series_attrs}

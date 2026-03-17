@@ -1,0 +1,5 @@
+defaults:
+  - xtab
+
+n_self_blocks: 0
+n_bidirectional_blocks: 2

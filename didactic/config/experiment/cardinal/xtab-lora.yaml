@@ -1,0 +1,43 @@
+# @package _global_
+
+defaults:
+  - cardinal/cardiac-multimodal-representation
+  - override /task/model/encoder: xtab-interleaved
+  - override /task/time_series_tokenizer/model: transformer
+
+trainer:
+  max_steps: 2000
+
+task:
+  perform_lora: True
+  predict_losses:
+    ht_severity:
+      _target_: torch.nn.CrossEntropyLoss
+  ordinal_mode: False
+  contrastive_loss: null
+    # _target_: dataprocessing.metrics.train.metric.NTXent
+  contrastive_loss_weight: 0
+
+  # Architecture parameters to define the same architecture as XTab
+  embed_dim: 192
+
+  # Define positional embedding
+  # positional_encoding:
+  #   _target_: didactic.models.layers.PositionalEncoding
+  #   sequence_len: 21 #${op.add:${task.time_series_tokenizer.resample_dim},${task.cls_token}}
+  #   d_model: ${task.embed_dim}
+
+  # Default to the light finetuning describe in XTab's paper
+  optim:
+    optimizer:
+      _target_: torch.optim.AdamW
+      lr: 1e-4
+      weight_decay: 1e-5
+
+  time_series_tokenizer:
+    channel_first: False
+
+# Change checkpoint loading defaults to:
+ckpt: /home/stympopper/didacticJerem/ckpts/xtab_lora.ckpt # Make it mandatory to provide a checkpoint
+weights_only: True  # Only load the weights and ignore the hyperparameters
+strict: False # Only load weights where they match the defined network, to only some changes (e.g. heads, etc.)

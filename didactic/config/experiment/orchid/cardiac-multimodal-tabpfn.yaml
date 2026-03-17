@@ -1,0 +1,194 @@
+# @package _global_
+
+defaults:
+  - /task/data: tabular+time-series
+  - /task/time_series_tokenizer/model: transformer
+  - /task/model/encoder: ???
+  # - /task/data/preprocessors: tabpfn-ensemble-config
+  - /task/model/contrastive_head: mlp
+  - /task/model/fusion_module: dafted-fusion
+  # - /task/model/fusion_module: null
+  - /task/model/ts_encoder: time-series-pfn-encoder
+  - /task/model/prediction_head: pfn-prediction
+  - /task/model/prediction_head@task.model.ordinal_head: unimodal-logits
+  - override /task/model: null  # Set this to null because we specify multiple submodels instead of a singleton model
+  - override /task/optim: adamw
+  - override /data: orchid
+
+test: True
+
+trainer:
+  devices: 1
+  precision: 32 #16-mixed, 32
+
+output_dir: ${sys.getcwd:}
+
+data:
+  batch_size: 1024
+  test_batch_size: 1
+  patients_kwargs:
+    views: [A4C]
+  process_patient_kwargs:
+    tabular_attrs:
+      - ef
+      - esv
+      - edv
+      - a4c_ed_sc_min
+      - a4c_ed_sc_max
+      - a4c_ed_lc_min
+      - a4c_ed_lc_max
+      - a2c_ed_ic_min
+      - a2c_ed_ic_max
+      - a2c_ed_ac_min
+      - a2c_ed_ac_max
+      - a3c_ed_ilc_min
+      - a3c_ed_ilc_max
+      - a3c_ed_asc_min
+      - a3c_ed_asc_max
+      - age
+      - sex
+      - bmi
+      - stroke
+      - tobacco
+      - diabetes
+      - dyslipidemia
+      - arb
+      - tz_diuretic
+      - alpha_blocker
+      - ccb
+      - hb
+      - antipla
+      - anticoag
+      - lp_diuritique
+      - k_diuritique
+      - arni
+      - proteinuria
+      - creatinuria
+      - microalbuminuria
+      - sbp_tte
+      - dbp_tte
+      - hr_tte
+      - creat
+      - gfr
+      - nt_probnp
+      - e_velocity
+      - a_velocity
+      - mv_dt
+      - lateral_e_prime
+      - septal_e_prime
+      - e_e_prime_ratio
+      - lvm_ind
+      - lvh
+      - ivs_d
+      - lvid_d
+      - pw_d
+      - paps
+      - ti_pgmax
+      - lbbb
+      - rbbb
+      - rhythm
+      - pr_interval
+      - qrs_interval
+      - qt_interval
+      - r_axis
+      - sa_ev
+      - diagnosis
+    time_series_attrs:
+      - gls
+      - ls_left
+      # - ls_right
+      - lv_area
+      # - lv_length
+      - myo_thickness_left
+      # - myo_thickness_right
+
+  predict:
+    _target_: didactic.data.orchid.predict_tabpfn.CardiacRepresentationPredictionWriter
+    write_path: ${output_dir}/predictions
+
+exclude_tabular_attrs: []
+# Determine the number of tabular + time-series attributes used by the model based on their respective configs
+n_tabular_attrs: ${builtin.len:${task.tabular_attrs}}
+n_time_series_attrs: ${op.mul:${builtin.len:${task.views}},${builtin.len:${task.time_series_attrs}}}
+
+
+task:
+  _target_: didactic.tasks.cardiac_multimodal_tabpfn.CardiacMultimodalTabPFN
+  embed_dim: 8
+  views: ${data.patients_kwargs.views}
+  target_attr: diagnosis
+  seed : ${seed}
+  mtr_p: [ 0.6, 0 ]
+  mt_by_attr: False
+  perform_lora: False
+  latent_representation: False
+  dummy_mode: False
+  explainability: False
+  first_prenormalization: False
+  split_finetuning: 0.5
+  support_flip: False
+  time_series_processing_option: none
+  time_series_positional_encoding: none  # none, sinusoidal, learned
+  time_series_feature_fusion: False
+  positional_encoding: none  # none, rope
+
+  # positional_encoding:
+  #   _target_: didactic.models.layers.PositionalEncoding
+  #   sequence_len: ${op.add:${op.add:${n_tabular_attrs},${n_time_series_attrs}},${task.cls_token}}
+  #   d_model: ${task.embed_dim}
+
+  tabular_tokenizer:
+    _target_: didactic.models.tabular.TabularEmbedding
+    d_token: ${task.embed_dim}
+  # tabular_tokenizer:
+  #   _target_: didactic.models.tabpfn_tokenizer.TabPFNTokenizer
+  #   d_token: ${task.embed_dim}
+
+  time_series_tokenizer:
+    _target_: didactic.models.time_series.TimeSeriesEmbedding
+    resample_dim: 64
+
+# callbacks:
+#   learning_rate_finder:
+#     _target_: pytorch_lightning.callbacks.LearningRateFinder
+
+
+experiment_dirname: data=${hydra:runtime.choices.task/data}/contrastive=${oc.select:task.contrastive_loss_weight,0}/time_series_tokenizer=${hydra:runtime.choices.task/time_series_tokenizer/model}
+hydra:
+  job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - hydra/launcher
+          - hydra.launcher.n_jobs
+          - hydra.run.dir
+          - hydra.sweep.dir
+          - hydra.sweep.subdir
+
+          - experiment
+          - trainer.enable_progress_bar
+          - trainer.max_epochs
+
+          - callbacks.learning_rate_finder
+
+          - ckpt
+
+          - data
+          - exclude_tabular_attrs
+          - task/data
+          - task.tabular_attrs
+          - task.time_series_attrs
+          - task.predict_losses
+          - task.contrastive_loss._target_
+          - task.contrastive_loss_weight
+          - task.mtr_p
+          - task.mt_by_attr
+
+          - task.embed_dim
+          - task/time_series_tokenizer/model
+
+          - task/model/encoder
+
+          - task.ordinal_mode
+          - task.model.ordinal_head.distribution
+          - task.model.ordinal_head.tau_mode

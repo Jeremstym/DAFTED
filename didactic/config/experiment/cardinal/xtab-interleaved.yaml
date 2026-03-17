@@ -1,0 +1,32 @@
+# @package _global_
+
+defaults:
+  - cardinal/cardiac-multimodal-representation
+  - override /task/model/encoder: xtab-interleaved
+  - override /task/time_series_tokenizer/model: transformer
+
+trainer:
+  max_steps: 2000
+
+task:
+  predict_losses:
+    ht_severity:
+      _target_: torch.nn.CrossEntropyLoss
+  ordinal_mode: False
+  contrastive_loss: null
+  cls_token: True
+
+  # Architecture parameters to define the same architecture as XTab
+  embed_dim: 192
+
+  # Default to the light finetuning describe in XTab's paper
+  optim:
+    optimizer:
+      _target_: torch.optim.AdamW
+      lr: 1e-4
+      weight_decay: 1e-5
+
+# Change checkpoint loading defaults to:
+ckpt: ??? # Make it mandatory to provide a checkpoint
+weights_only: True  # Only load the weights and ignore the hyperparameters
+strict: False # Only load weights where they match the defined network, to only some changes (e.g. heads, etc.)

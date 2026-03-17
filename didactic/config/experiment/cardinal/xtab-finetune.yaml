@@ -1,0 +1,52 @@
+# @package _global_
+
+defaults:
+  - cardinal/cardiac-multimodal-representation
+  # - /callbacks:
+  #   - transformer_encoder_freeze
+  - override /task/model/encoder: xtab-ft-transformer
+
+trainer:
+  max_steps: 2000
+
+exclude_tabular_attrs: ${oc.dict.keys:task.predict_losses}
+
+task:
+  predict_losses: ???
+  ordinal_mode: False
+  contrastive_loss:
+    _target_: dataprocessing.metrics.train.metric.NTXent
+  contrastive_loss_weight: 0
+  mtr_p: [ 0.6, 0 ]
+  use_tabularMLP: False
+
+  # Architecture parameters to define the same architecture as XTab
+  embed_dim: 192
+  model:
+    encoder:
+      d_token: ${task.embed_dim}
+
+  # Default to the light finetuning describe in XTab's paper
+  optim:
+    optimizer:
+      _target_: torch.optim.AdamW
+      lr: 1e-4
+      weight_decay: 1e-5
+
+# callbacks:
+  # transformer_encoder_freeze:
+  #   finetune_layers: null
+  # learning_rate_finder:
+  #   _target_: pytorch_lightning.callbacks.LearningRateFinder
+
+# Change checkpoint loading defaults to:
+ckpt: ??? # Make it mandatory to provide a checkpoint
+weights_only: True  # Only load the weights and ignore the hyperparameters
+strict: False # Only load weights where they match the defined network, to only some changes (e.g. heads, etc.)
+
+hydra:
+  run:
+    dir: ${oc.env:CARDIAC_MULTIMODAL_REPR_PATH}/xtab-finetune/${experiment_dirname}/targets=${oc.dict.keys:task.predict_losses}/ordinal_mode=${task.ordinal_mode},distribution=${task.model.ordinal_head.distribution},tau_mode=${task.model.ordinal_head.tau_mode}/${hydra.job.override_dirname}
+  sweep:
+    dir: ${oc.env:CARDIAC_MULTIMODAL_REPR_PATH}/xtab-finetune
+    subdir: ${experiment_dirname}/targets=${oc.dict.keys:task.predict_losses}/ordinal_mode=${task.ordinal_mode},distribution=${task.model.ordinal_head.distribution},tau_mode=${task.model.ordinal_head.tau_mode}/${hydra.job.override_dirname}

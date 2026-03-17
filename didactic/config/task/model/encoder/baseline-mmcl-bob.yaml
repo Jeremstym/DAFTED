@@ -1,0 +1,6 @@
+_target_: didactic.models.baselines.MMCLEncoder
+
+n_tabular_attrs: ${n_tabular_attrs}
+ts_encoder: ${ts_unimodal_encoder}
+n_tab_mlp_layers: 1
+tab_mlp_hidden: 2048

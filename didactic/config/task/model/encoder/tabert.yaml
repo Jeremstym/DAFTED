@@ -1,0 +1,5 @@
+_target_: didactic.models.llms.BertTabClassifier.from_pretrained
+
+# pretrained_model_name_or_path: bert-base-uncased
+pretrained_model_name_or_path: dmis-lab/biobert-base-cased-v1.2
+num_labels: 5

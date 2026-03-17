@@ -1,0 +1,50 @@
+_target_: torch.nn.Sequential
+_args_:
+  - _target_: collections.OrderedDict
+
+    # differentiate_TS:
+    #   _target_: dataprocessing.models.layers.Lambda
+    #   fn:
+    #     _target_: didactic.models.time_series.differentiate_ts
+    #     _partial_: True
+    #   order: 1
+
+    multi_differentiate_TS:
+      _target_: dataprocessing.models.layers.Lambda
+      fn:
+        _target_: didactic.models.time_series.multi_differentiate_ts
+        _partial_: True
+      orders: [ 0, 1, 2 ]
+
+    # expand_feat_dim:
+    #   _target_: dataprocessing.models.layers.Lambda
+    #   fn:
+    #     _target_: torch.unsqueeze
+    #     _partial_: True
+    #   dim: -1
+
+    # downsampling:
+    #   _target_: didactic.models.layers.TS_Patching
+    #   in_features: 1
+    #   out_features: 1
+    #   kernel_size: 16
+    #   stride: 8
+    #   padding: 1
+
+    # squeeze_feat_dim:
+    #   _target_: dataprocessing.models.layers.Lambda
+    #   fn:
+    #     _target_: torch.squeeze
+    #     _partial_: True
+    #   dim: -1
+
+    # linear_embedding:
+    #   _target_: torch.nn.Linear
+    #   in_features: ${op.sub:${task.time_series_tokenizer.resample_dim},1}
+    #   out_features: ${task.embed_dim}
+
+    multi_linear_embedding:
+      _target_: didactic.models.time_series.MultiLinearEmbedding
+      in_features: ${task.time_series_tokenizer.resample_dim}
+      n_sub_ts: 3
+      d_model: ${task.embed_dim}

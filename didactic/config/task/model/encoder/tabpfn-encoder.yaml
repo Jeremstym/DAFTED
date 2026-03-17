@@ -1,0 +1,10 @@
+_target_: didactic.models.tabpfn_encoder.TabPFNEncoder
+model_path: /home/stympopper/didacticJerem/ckpts/tabpfn-v2-classifier.ckpt
+seed: ${seed}
+which: classifier # regressor
+fit_mode: fit_preprocessors # fit_preprocessors, low_memory, fit_with_cache
+updated_pfn_path: null
+n_time_series_attrs: ${n_time_series_attrs}
+random_init: False # Whether to randomly initialize the TabPFN weights instead of loading pretrained weights
+recompute_layer: False # Whether to use recompute layers to save memory
+positional_encoding: ${task.positional_encoding} # None, rope
