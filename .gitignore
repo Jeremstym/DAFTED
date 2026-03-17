@@ -4,3 +4,7 @@
 *.pt
 
 *.pyc
+
+ckpts/
+diagrams/
+results/
