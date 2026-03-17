@@ -1,0 +1,5 @@
+model_checkpoint:
+  _target_: pytorch_lightning.callbacks.ModelCheckpoint
+  monitor: "val/loss"
+  # save_last: True
+  save_last: False

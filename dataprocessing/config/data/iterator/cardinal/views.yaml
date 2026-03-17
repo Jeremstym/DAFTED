@@ -1,0 +1,4 @@
+defaults:
+  - cardinal/default@_here_
+
+_target_: dataprocessing.data.cardinal.utils.itertools.Views

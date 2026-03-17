@@ -1,0 +1,5 @@
+time_series_attrs_transforms:
+  any:
+    interp1d:
+      _target_: dataprocessing.data.transforms.Interp1d
+      num: 64
