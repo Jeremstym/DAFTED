@@ -1,0 +1,31 @@
+[2024-01-24 14:35:50,666][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:35:50,848][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:35:50,850][vital.runner][INFO] - Instantiating prediction writer
+[2024-01-24 14:36:34,628][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:36:34,653][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:36:34,654][vital.runner][INFO] - Instantiating prediction writer
+[2024-01-24 14:42:08,995][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:42:09,020][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:42:09,021][vital.runner][INFO] - Instantiating prediction writer
+[2024-01-24 14:45:28,538][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:45:28,556][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:45:28,557][vital.runner][INFO] - Instantiating prediction writer
+[2024-01-24 14:45:38,189][vital.utils.config][INFO] - Instantiating train time_series_attrs_transform <interp1d>
+[2024-01-24 14:45:38,202][vital.utils.config][INFO] - Instantiating val time_series_attrs_transform <interp1d>
+[2024-01-24 14:45:38,204][vital.utils.config][INFO] - Instantiating test time_series_attrs_transform <interp1d>
+[2024-01-24 14:46:40,874][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:46:40,878][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:46:40,878][vital.runner][INFO] - Instantiating prediction writer
+[2024-01-24 14:46:44,741][urllib3.connectionpool][WARNING] - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b6535fc0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/isAlive/ver
+[2024-01-24 14:46:48,746][urllib3.connectionpool][WARNING] - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b6535ff0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/isAlive/ver
+[2024-01-24 14:46:56,756][urllib3.connectionpool][WARNING] - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b6537490>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/isAlive/ver
+[2024-01-24 14:46:56,762][urllib3.connectionpool][WARNING] - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b65355d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/logger/add/run
+[2024-01-24 14:47:00,767][urllib3.connectionpool][WARNING] - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b65352d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/logger/add/run
+[2024-01-24 14:47:08,777][urllib3.connectionpool][WARNING] - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2b65351e0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /clientlib/logger/add/run
+[2024-01-24 14:47:08,912][vital.utils.config][INFO] - Instantiating train time_series_attrs_transform <interp1d>
+[2024-01-24 14:47:08,915][vital.utils.config][INFO] - Instantiating val time_series_attrs_transform <interp1d>
+[2024-01-24 14:47:08,916][vital.utils.config][INFO] - Instantiating test time_series_attrs_transform <interp1d>
+[2024-01-24 14:47:50,370][vital.runner][INFO] - Loading weights from didactic-xtab-finetune.ckpt
+[2024-01-24 14:52:01,517][vital.utils.config][INFO] - Instantiating callback <model_checkpoint>
+[2024-01-24 14:52:01,519][vital.utils.config][INFO] - Instantiating callback <learning_rate_finder>
+[2024-01-24 14:52:01,520][vital.runner][INFO] - Instantiating prediction writer
