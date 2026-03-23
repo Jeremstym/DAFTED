@@ -304,7 +304,7 @@ def filter_time_series_attributes(
     #             f"Mask does not match torch.nan data for {view_enum}/{view_data_tag}: {data[~torch.isnan(data)]} != {data[mask]}"
     #         )
 
-    return time_series_data, time_series_notna_mask
+    return time_series_data
 
 
 if __name__ == "__main__":
