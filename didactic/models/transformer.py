@@ -2627,7 +2627,7 @@ class FT_Interleaved_Alignment_NoCross(nn.Module):
         return output_tensor
 
 
-class FT_Interleaved_2UniFTs_Inverted(nn.Module):
+class DAFTED_encoder(nn.Module):
     """Transformer with extra features.
 
     This module is the backbone of `FTTransformer`."""

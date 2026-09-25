@@ -2,7 +2,7 @@
 
 defaults:
   - cardinal/cardiac-multimodal-representation
-  - override /task/model/encoder: xtab-alignment
+  - override /task/model/encoder: dafted-encoder
 
 trainer:
   max_steps: 2000

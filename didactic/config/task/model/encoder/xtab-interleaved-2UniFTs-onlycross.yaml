@@ -1,4 +1,4 @@
-_target_: didactic.models.transformer.FT_Interleaved_2UniFTs_Inverted
+_target_: didactic.models.transformer.DAFTED_encoder
 
 d_token: 192
 n_self_blocks: 0

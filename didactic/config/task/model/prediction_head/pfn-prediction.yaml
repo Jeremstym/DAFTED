@@ -1,3 +1,0 @@
-_target_: didactic.models.layers.TabPFNPredictionHead
-in_features: ${task.embed_dim}
-model_path: ${task.model.encoder.model_path}

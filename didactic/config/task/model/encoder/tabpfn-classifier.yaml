@@ -1,8 +1,0 @@
-_target_: tabpfn.TabPFNClassifier
-    
-random_state: ${seed}
-n_estimators: ${task.n_estimators}
-ignore_pretraining_limits: True
-fit_mode: batched # fit_preprocessors, batched
-differentiable_input: True
-device: cuda

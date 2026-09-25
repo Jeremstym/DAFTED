@@ -93,7 +93,7 @@ def check_model_encoder(encoder: nn.Module, hparams: MutableMapping[str, Any]) -
         nhead = hparams.model.encoder.attention_n_heads
         separate_modality = False
     elif isinstance(
-        encoder, didactic.models.transformer.FT_Interleaved_2UniFTs_Inverted
+        encoder, didactic.models.transformer.DAFTED_encoder
     ):  # didactic submodule `FT_Interleaved`
         nhead = hparams.model.encoder.attention_n_heads
         separate_modality = False

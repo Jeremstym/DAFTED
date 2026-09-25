@@ -1,4 +1,0 @@
-_target_: didactic.models.baselines.AvgConcatMLP
-
-n_mlp_layers: 2
-n_tabular_attrs: ${n_tabular_attrs}

@@ -1,5 +1,0 @@
-_target_: didactic.models.baselines.FlatConcatMLP
-
-sequence_length: ${op.add:${n_tabular_attrs},${n_time_series_attrs}}
-n_mlp_layers: 2
-d_token: ${task.embed_dim}
