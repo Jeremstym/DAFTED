@@ -271,7 +271,6 @@ strict: false
 train: true
 test: true
 predict: true
-results_processors_multiprocessing: true
 comet_tags: null
 choices: ${hydra:runtime.choices}
 best_model_save_path: null

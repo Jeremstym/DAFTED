@@ -24,8 +24,6 @@ train: True
 test: False
 predict: True
 
-results_processors_multiprocessing: True
-
 comet_tags: null # Tags to for comet experiment if CometLogger is used.
 
 # Keep track of choices.
