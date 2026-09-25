@@ -70,9 +70,6 @@ def check_model_encoder(encoder: nn.Module, hparams: MutableMapping[str, Any]) -
     elif isinstance(encoder, didactic.models.transformer.FT_Interleaved_Alignment):  # didactic submodule `FT_Alignment`
         nhead = hparams.model.encoder.attention_n_heads
         separate_modality = False
-    elif isinstance(encoder, didactic.models.transformer.FT_Interleaved_Alignment_NoCross):  # didactic submodule `FT_Alignment`
-        nhead = hparams.model.encoder.attention_n_heads
-        separate_modality = False
     elif isinstance(encoder, didactic.models.transformer.FT_DiffInterleaved_Alignment):  # didactic submodule `FT_DiffAlignment`
         nhead = hparams.model.encoder.attention_n_heads
         separate_modality = False
@@ -94,11 +91,6 @@ def check_model_encoder(encoder: nn.Module, hparams: MutableMapping[str, Any]) -
         separate_modality = False
     elif isinstance(
         encoder, didactic.models.transformer.DAFTED_encoder
-    ):  # didactic submodule `FT_Interleaved`
-        nhead = hparams.model.encoder.attention_n_heads
-        separate_modality = False
-    elif isinstance(
-        encoder, didactic.models.transformer.FT_Interleaved_2UniFTs_nosubmodule
     ):  # didactic submodule `FT_Interleaved`
         nhead = hparams.model.encoder.attention_n_heads
         separate_modality = False
