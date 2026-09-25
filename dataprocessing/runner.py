@@ -131,12 +131,6 @@ class VitalRunner(ABC):
         if cfg.ckpt:  # Load pretrained model if checkpoint is provided
             if cfg.weights_only:
                 logger.info(f"Loading weights from {ckpt_path}")
-                # if not cfg.state_dict:
-                #     model.load_state_dict(torch.load(ckpt_path, map_location=model.device), strict=cfg.strict)
-                #     for key in model.state_dict():
-                #         if key in model.state_dict().keys() and key in torch.load(ckpt_path, map_location=model.device).keys():
-                #             print(key)
-                # else:
                 model.load_state_dict(torch.load(ckpt_path, map_location=model.device)["state_dict"], strict=cfg.strict)
                 modelkeys = list(model.state_dict().keys())
                 loadkeys = list(torch.load(ckpt_path, map_location=model.device)["state_dict"].keys())
@@ -154,8 +148,6 @@ class VitalRunner(ABC):
             if not cfg.trainer.get("fast_dev_run", False):
                 # Copy best model checkpoint to a predictable path + online tracker (if used)
                 if trainer.checkpoint_callback is not None:
-                    # copy2(trainer.checkpoint_callback.best_model_path, str(best_model_path))
-                    # os.rename(trainer.checkpoint_callback.best_model_path, str(best_model_path))
                     # Ensure we use the best weights (and not the latest ones) by loading back the best model
                     model = model.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)
                     print(f"Best model checkpoint saved at {trainer.checkpoint_callback.best_model_path}")
