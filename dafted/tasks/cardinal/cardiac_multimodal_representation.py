@@ -356,27 +356,6 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
                 # Init a single universal MASK token
                 self.mask_token = _init_mask_token()
 
-        # if perform_lora:
-        #     adapter_encoder: nn.Module
-        #     lora_linar = LoRALinear
-        #     if not self.separate_modality:
-        #         adapter_encoder = AdapterWrapperFT_Transformer(self.encoder, lora_linar, gamma=8, lora_alpha=8)
-        #     elif isinstance(self.encoder, dafted.models.transformer.FT_Interleaved):
-        #         adapter_encoder = AdapterWrapperFT_Interleaved(self.encoder, lora_linar, gamma=8, lora_alpha=8)
-        #     else:
-        #         adapter_encoder = AdapterWrapperFT_Transformer_CrossAtt(self.encoder, lora_linar, gamma=8, lora_alpha=8)
-        #     setattr(self, "encoder", adapter_encoder)
-
-        # tab_attrs_example = {attr: torch.randn(2) for attr in self.tabular_num_attrs}
-        # # Only generate 0/1 labels, to avoid generating labels bigger than the number of classes, which would lead to
-        # # an index out of range error when looking up the embedding of the class in the categorical feature tokenizer
-        # tab_attrs_example.update({attr: torch.randint(2, (2,)) for attr in self.tabular_cat_attrs})
-        # time_series_attrs_example = {
-        #     (view, attr): torch.randn(2, self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs][1])
-        #     for view, attr in itertools.product(self.hparams["views"], self.hparams["time_series_attrs"])
-        # }
-
-        # self.example_input_array = (tab_attrs_example, time_series_attrs_example)
 
     @property
     def example_input_array(
@@ -401,12 +380,8 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         # Build the transformer encoder
         encoder = hydra.utils.instantiate(self.hparams["model"]["encoder"])
 
-        # Build the projection head for contrastive learning, if contrastive learning is enabled
-        # contrastive_head = None
-        # if self.contrastive_loss and not self.orthogonal_loss:
-        #     contrastive_head = hydra.utils.instantiate(self.hparams["model"]["contrastive_head"])
-        # elif self.contrastive_loss and self.orthogonal_loss:
-        print("Temporary set contrastive head to identity")
+        # Build the contrastive head, if needed
+        # Already included in Dafted encoder module
         contrastive_head = nn.Identity()
 
         # Build the prediction heads (one by tabular attribute to predict) following the architecture proposed in
@@ -596,9 +571,6 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         if self.hparams["cls_token"]:
             # Only keep the CLS token (i.e. the last token) from the tokens outputted by the encoder
             out_features = out_tokens[:, -1, :]  # (N, S, E) -> (N, E)
-            # if self.hparams["ts_cls_token"]:
-            #     len_ts = self.n_time_series_attrs + 1
-            #     out_ts_features = out_tokens[:, len_ts-1, :]  # (N, S, E) -> (N, E)
         elif self.hparams["sequence_pooling"]:
             # Perform sequence pooling of the transformers' output tokens
             out_features = self.sequence_pooling(out_tokens)  # (N, S, E) -> (N, E)
@@ -650,8 +622,6 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         in_tokens, avail_mask = self.tokenize(
             tabular_attrs, time_series_attrs
         )  # (N, S, E), (N, S)
-        # if self.contrastive_loss and self.hparams["contrastive_loss_weight"]:
-        #     enable_proj = True
         out_features = self.encode(in_tokens, avail_mask, output_all=output_all)  # (N, S, E) -> (N, E)
         if output_all:
             return out_features
@@ -754,8 +724,7 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
                 # For ordinal targets, extract the logits from the multiple outputs of classification head
                 pred = pred[0]
             predictions[attr] = pred.squeeze(dim=1)
-        # Print patient id related to predictions
-        # print(f'Patient ID: {batch["id"]}, Predictions: {predictions}')
+
         # Compute the loss/metrics for each target attribute, ignoring items for which targets are missing
         losses, metrics = {}, {}
         for attr, loss in self.predict_losses.items():
@@ -787,11 +756,7 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
 
                 metrics[f"{metric_tag}/{attr}"] = metric_res
 
-        # Reduce loss across the multiple targets
-        if self.hparams["dummy_mode"]:
-            losses["s_loss"] = 0.0
-        else:
-            losses["s_loss"] = torch.stack(list(losses.values())).mean()
+        losses["s_loss"] = torch.stack(list(losses.values())).mean()
         metrics.update(losses)
 
         return metrics
@@ -823,7 +788,6 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
                 [tabular_attrs[attr].unsqueeze(1) for attr in self.tabular_cat_attrs]
             )  # (N, S_cat)
 
-        #TODO: do the case where there is no categorical attributes nor numerical attributes
         assert (num_attrs is not None and cat_attrs is not None), "Tabular attributes must be provided for reconstruction step."
         tab_labels = torch.cat([torch.nan_to_num(num_attrs), cat_attrs.clip(0)], dim=1)  # (N, S_tab)
 
@@ -873,21 +837,9 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         assert self.contrastive_loss is not None, (
             "You requested to perform a contrastive step, but the model does not include a contrastive loss."
         )
-        # Extract features from the original view + from a view corrupted by augmentations
-        # anchor_out_features = out_features
-        # pre_ts_features, pre_features =  in_tokens[:, self.n_time_series_attrs, :], in_tokens[:, -1, :]
-        # out_features, out_ts_features =  self.encode(in_tokens, avail_mask, enable_augments=False, alignment=True)
-        # corrupted_out_features = self.encode(in_tokens, avail_mask, enable_augments=True)
-        # ts_tokens, tab_tokens = in_tokens[:, : self.n_time_series_attrs], in_tokens[:, self.n_time_series_attrs :]
-
+        
         # Get the average of the tokens for each modality
-
         ts_avg, tab_unique_avg, tab_shared_avg = self.encode(in_tokens, avail_mask, output_intermediate=True)
-
-        # ts_tokens = self.time_series_lin_proj(ts_tokens)
-        # ts_avg = torch.mean(ts_tokens, dim=1) # (N, E)
-        # tab_tokens = self.tabular_lin_proj(tab_tokens)
-        # tab_avg = torch.mean(tab_tokens, dim=1, keepdim=True).reshape(-1, 2, self.hparams["embed_dim"]) # (N, 2, E)
 
         # Iterate on the attributes to get labels (there is one attribute, hence the loop is only once)
         for attr, _ in self.predict_losses.items():
@@ -897,6 +849,7 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
                 notna_mask = target != MISSING_CAT_ATTR
             else:  # attr in TabularAttribute.numerical_attrs():
                 notna_mask = ~target.isnan()
+                
         # Compute the contrastive loss/metrics
         metrics = {
             "cont_loss": self.contrastive_loss(
