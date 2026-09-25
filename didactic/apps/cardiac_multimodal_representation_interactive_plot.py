@@ -11,10 +11,10 @@ import panel as pn
 import param # type: ignore[import-untyped]
 import seaborn as sns
 from bokeh.models import HoverTool
-from dataprocessing.data.orchid.config import OrchidTag, TabularAttribute
-from dataprocessing.data.orchid.utils.attributes import TABULAR_ATTR_GROUPS
-from dataprocessing.data.orchid.utils.data_struct import Patient
-from dataprocessing.data.orchid.utils.itertools import Patients
+from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute
+from dataprocessing.data.cardinal.utils.attributes import TABULAR_ATTR_GROUPS
+from dataprocessing.data.cardinal.utils.data_struct import Patient
+from dataprocessing.data.cardinal.utils.itertools import Patients
 from panel.layout import Panel
 
 from didactic.tasks.cardiac_multimodal_representation import CardiacMultimodalRepresentationTask

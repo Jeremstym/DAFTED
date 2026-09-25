@@ -1,11 +1,11 @@
 from typing import Iterator, Tuple
 
 import pandas as pd
-from dataprocessing.data.orchid.utils.attributes import plot_attributes_wrt_time
+from dataprocessing.data.cardinal.utils.attributes import plot_attributes_wrt_time
 from matplotlib.axes import Axes
 
-from didactic.results.orchid.utils.attributes_plot import AttributesPlots
-from didactic.results.orchid.utils.time_series_attributes import TimeSeriesAttributesMixin
+from didactic.results.cardinal.utils.attributes_plot import AttributesPlots
+from didactic.results.cardinal.utils.time_series_attributes import TimeSeriesAttributesMixin
 
 
 class TimeSeriesAttributesPlots(TimeSeriesAttributesMixin, AttributesPlots): # type: ignore[misc]

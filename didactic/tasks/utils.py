@@ -5,12 +5,12 @@ from typing import Any, Dict, Iterable, Literal, Sequence, Tuple, Optional, Unio
 import numpy as np
 import torch
 from torch import Tensor
-from dataprocessing.data.orchid.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
-from dataprocessing.data.orchid.datapipes import process_patient
-from dataprocessing.data.orchid.utils.data_dis import check_subsets
-from dataprocessing.data.orchid.utils.data_struct import Patient
-from dataprocessing.data.orchid.utils.itertools import Patients
+from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
+from dataprocessing.data.cardinal.datapipes import process_patient
+from dataprocessing.data.cardinal.utils.data_dis import check_subsets
+from dataprocessing.data.cardinal.utils.data_struct import Patient
+from dataprocessing.data.cardinal.utils.itertools import Patients
 from dataprocessing.utils.format.torch import numpy_to_torch, torch_apply, torch_to_numpy
 from torch import Tensor
 from torch.utils.data import default_collate

@@ -3,7 +3,7 @@ from typing import Any, Callable, Dict, List, Literal, Optional, Sequence, Tuple
 
 import torch
 import torch.nn as nn
-from dataprocessing.data.orchid.config import TabularAttribute
+from dataprocessing.data.cardinal.config import TabularAttribute
 from torch.nn import BCEWithLogitsLoss
 from transformers import (  # type: ignore[import]
     AutoModel,

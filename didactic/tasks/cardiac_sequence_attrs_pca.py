@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import Any, Dict, Literal, Optional, Tuple, Union
 
 import numpy as np
-from dataprocessing.data.orchid.config import TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
+from dataprocessing.data.cardinal.config import TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.transforms import Interp1d
 from dataprocessing.utils.decorators import auto_cast_data
 from dataprocessing.utils.norm import minmax_scaling, scale
@@ -228,9 +228,9 @@ def main():
     import argparse
 
     import pandas as pd
-    from dataprocessing.data.orchid.config import CardinalTag
-    from dataprocessing.data.orchid.utils.attributes import TIME_SERIES_ATTR_LABELS
-    from dataprocessing.data.orchid.utils.itertools import Patients
+    from dataprocessing.data.cardinal.config import CardinalTag
+    from dataprocessing.data.cardinal.utils.attributes import TIME_SERIES_ATTR_LABELS
+    from dataprocessing.data.cardinal.utils.itertools import Patients
     from dataprocessing.utils.logging import configure_logging
     from dataprocessing.utils.parsing import yaml_flow_collection
     from dataprocessing.utils.signal.decomposition import (

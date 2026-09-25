@@ -7,8 +7,8 @@ from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
 import torch
-from dataprocessing.data.orchid.utils.data_struct import View
-from dataprocessing.data.orchid.utils.itertools import Views
+from dataprocessing.data.cardinal.utils.data_struct import View
+from dataprocessing.data.cardinal.utils.itertools import Views
 from dataprocessing.results.metrics import Metrics
 from dataprocessing.utils.parsing import yaml_flow_collection
 from dataprocessing.utils.saving import load_from_checkpoint

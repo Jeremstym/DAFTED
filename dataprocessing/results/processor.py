@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Mapping, Optional, Tuple, Type, Union
 
 import pytorch_lightning as pl
-from dataprocessing.data.orchid.utils.data_struct import Patient, View
+from dataprocessing.data.cardinal.utils.data_struct import Patient, View
 from dataprocessing.utils.itertools import Collection, Item
 from dataprocessing.utils.logging import configure_logging
 from pathos.multiprocessing import Pool

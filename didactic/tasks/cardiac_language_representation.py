@@ -8,10 +8,10 @@ import dataprocessing
 import hydra
 import torch
 from dataprocessing.data.augmentation.base import mask_tokens, random_masking
-from dataprocessing.data.orchid.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
-from dataprocessing.data.orchid.datapipes import MISSING_CAT_ATTR, PatientData, PatientDataTarget, PatientDataInference, filter_time_series_attributes
-from dataprocessing.data.orchid.utils.attributes import TABULAR_CAT_ATTR_LABELS
+from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
+from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR, PatientData, PatientDataTarget, PatientDataInference, filter_time_series_attributes
+from dataprocessing.data.cardinal.utils.attributes import TABULAR_CAT_ATTR_LABELS
 from dataprocessing.tasks.generic import SharedStepsTask
 from dataprocessing.utils.decorators import auto_move_data
 from omegaconf import DictConfig

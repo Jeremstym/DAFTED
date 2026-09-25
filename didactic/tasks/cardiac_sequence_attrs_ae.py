@@ -7,9 +7,9 @@ from typing import Dict, Literal, Optional, Sequence, Tuple, TypeVar, Union
 import hydra
 import numpy as np
 import torch
-from dataprocessing.data.orchid.config import OrchidTag, TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
-from dataprocessing.data.orchid.datapipes import PatientData, filter_time_series_attributes
+from dataprocessing.data.cardinal.config import OrchidTag, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
+from dataprocessing.data.cardinal.datapipes import PatientData, filter_time_series_attributes
 from dataprocessing.tasks.generic import SharedStepsTask
 from dataprocessing.utils.decorators import auto_move_data
 from dataprocessing.utils.norm import minmax_scaling, scale

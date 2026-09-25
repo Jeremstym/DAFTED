@@ -6,11 +6,11 @@ import numpy as np
 import panel as pn
 import param #type: ignore[import-untyped]
 import torch
-from dataprocessing.data.orchid.config import OrchidTag, TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
-from dataprocessing.data.orchid.utils.attributes import TIME_SERIES_ATTR_LABELS
-from dataprocessing.data.orchid.utils.data_struct import Patient
-from dataprocessing.data.orchid.utils.itertools import Patients
+from dataprocessing.data.cardinal.config import OrchidTag, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
+from dataprocessing.data.cardinal.utils.attributes import TIME_SERIES_ATTR_LABELS
+from dataprocessing.data.cardinal.utils.data_struct import Patient
+from dataprocessing.data.cardinal.utils.itertools import Patients
 from dataprocessing.data.transforms import Interp1d
 from panel.layout import Panel
 

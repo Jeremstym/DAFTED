@@ -1,7 +1,7 @@
 from dataprocessing import get_vital_root
 
-from didactic.results.orchid.utils.temporal_metrics import TemporalMetrics
-from didactic.results.orchid.utils.time_series_attributes import TimeSeriesAttributesMixin
+from didactic.results.cardinal.utils.temporal_metrics import TemporalMetrics
+from didactic.results.cardinal.utils.time_series_attributes import TimeSeriesAttributesMixin
 
 
 class ImageTemporalMetrics(TimeSeriesAttributesMixin, TemporalMetrics): # type: ignore[misc]

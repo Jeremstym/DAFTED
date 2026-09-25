@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Optional, Sequence
 
 import torch
-from dataprocessing.data.orchid.datapipes import filter_time_series_attributes
+from dataprocessing.data.cardinal.datapipes import filter_time_series_attributes
 from torch import Tensor, nn
 from torch.nn import functional as F
 

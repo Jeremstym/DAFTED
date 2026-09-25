@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import yaml
-from dataprocessing.data.orchid.config import TabularAttribute
+from dataprocessing.data.cardinal.config import TabularAttribute
 from matplotlib import pyplot as plt
 from sklearn import metrics # type: ignore[import-untyped]
 from sklearn.mixture import GaussianMixture # type: ignore[import-untyped]
@@ -243,8 +243,8 @@ def main():
     from argparse import ArgumentParser
     from pathlib import Path
 
-    from dataprocessing.data.orchid.config import OrchidTag
-    from dataprocessing.data.orchid.utils.itertools import Patients
+    from dataprocessing.data.cardinal.config import OrchidTag
+    from dataprocessing.data.cardinal.utils.itertools import Patients
     from dataprocessing.utils.saving import load_from_checkpoint
 
     from didactic.tasks.cardiac_multimodal_representation import CardiacMultimodalRepresentationTask

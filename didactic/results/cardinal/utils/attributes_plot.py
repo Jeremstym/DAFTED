@@ -5,9 +5,9 @@ from typing import Dict, Hashable, Iterator, Optional, Sequence, Tuple, Union, c
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from dataprocessing.data.orchid.utils.attributes import build_attributes_dataframe
-from dataprocessing.data.orchid.utils.data_struct import Patient, View
-from dataprocessing.data.orchid.utils.itertools import Views
+from dataprocessing.data.cardinal.utils.attributes import build_attributes_dataframe
+from dataprocessing.data.cardinal.utils.data_struct import Patient, View
+from dataprocessing.data.cardinal.utils.itertools import Views
 from dataprocessing.results.processor import ResultsProcessor
 from matplotlib.axes import Axes
 

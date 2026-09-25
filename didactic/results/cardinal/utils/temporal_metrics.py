@@ -6,13 +6,13 @@ import numpy as np
 import pandas as pd
 import yaml
 from dataprocessing import get_vital_root
-from dataprocessing.data.orchid.utils.data_struct import View, Patient
-from dataprocessing.data.orchid.utils.itertools import Views
+from dataprocessing.data.cardinal.utils.data_struct import View, Patient
+from dataprocessing.data.cardinal.utils.itertools import Views
 from dataprocessing.metrics.evaluate.attribute import compute_temporal_consistency_metric
 from dataprocessing.results.metrics import Metrics
 from dataprocessing.utils.parsing import StoreDictKeyPair
 
-from didactic.results.orchid.utils.time_series_attributes import TimeSeriesAttributesMixin
+from didactic.results.cardinal.utils.time_series_attributes import TimeSeriesAttributesMixin
 
 
 class TemporalMetrics(Metrics, TimeSeriesAttributesMixin):

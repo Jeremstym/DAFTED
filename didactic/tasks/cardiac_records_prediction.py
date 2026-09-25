@@ -8,10 +8,10 @@ import pandas as pd
 import torch.nn.functional as F
 from torch import Tensor
 from dataprocessing.data.config import Subset
-from dataprocessing.data.orchid.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
-from dataprocessing.data.orchid.config import View as ViewEnum
-from dataprocessing.data.orchid.data_module import OrchidDataModule
-from dataprocessing.data.orchid.datapipes import MISSING_CAT_ATTR, PatientData, filter_time_series_attributes
+from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import View as ViewEnum
+from dataprocessing.data.cardinal.data_module import OrchidDataModule
+from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR, PatientData, filter_time_series_attributes
 from dataprocessing.utils.config import register_omegaconf_resolvers
 from dotenv import load_dotenv
 from omegaconf import DictConfig
@@ -228,7 +228,7 @@ class CardiacRecordsPredictionTask:
         self.model.save_model(path)
 
 
-@hydra.main(version_base=None, config_path="../config", config_name="experiment/orchid/records-xgb")
+@hydra.main(version_base=None, config_path="../config", config_name="experiment/cardinal/records-xgb")
 def main(cfg: DictConfig):
     """Fit the generic model to the tabular data from the patients."""
 

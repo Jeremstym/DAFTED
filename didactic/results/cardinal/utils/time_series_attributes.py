@@ -3,8 +3,8 @@ from argparse import ArgumentParser
 from typing import Dict, Sequence
 
 import numpy as np
-from dataprocessing.data.orchid.config import TimeSeriesAttribute, TabularAttribute
-from dataprocessing.data.orchid.utils.data_struct import View, Patient
+from dataprocessing.data.cardinal.config import TimeSeriesAttribute, TabularAttribute
+from dataprocessing.data.cardinal.utils.data_struct import View, Patient
 from dataprocessing.results.processor import ResultsProcessor
 
 logger = logging.getLogger(__name__)
