@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "didactic"
+name = "dafted"
 version = "0.1.0"
 description = "Deep manIfolD leArning CharacTerization In eChocardiography (DIDACTIC) project"
 authors = ["Nathan Painchaud <nathan.painchaud@usherbrooke.ca>"]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/creatis-myriad/didactic"
+repository = "https://github.com/creatis-myriad/dafted"
 classifiers=[
     "Environment :: Console",
     "Natural Language :: English",
@@ -84,7 +84,7 @@ types-seaborn = "^0.13.2.20250728"
 
 
 [tool.poetry.scripts]
-didactic-runner = "didactic.runner:main"
+dafted-runner = "dafted.runner:main"
 
 [[tool.poetry.source]]
 name = "pytorch-cu118"
@@ -98,7 +98,7 @@ exclude = "(.eggs|.git|.hg|.mypy_cache|.nox|.tox|.venv|.svn|_build|buck-out|buil
 [tool.isort]
 profile = "black"
 line_length = 120
-src_paths = ["didactic"]
+src_paths = ["dafted"]
 
 [build-system]
 requires = ["poetry-core"]

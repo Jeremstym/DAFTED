@@ -1,0 +1,7 @@
+_target_: dafted.models.tabular.TabularMLP
+
+in_features: ${n_tabular_attrs}
+out_features: ${task.embed_dim}
+n_layers: 2
+d_token: 192
+dropout: 0.1

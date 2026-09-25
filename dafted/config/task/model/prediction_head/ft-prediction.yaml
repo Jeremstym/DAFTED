@@ -1,0 +1,2 @@
+_target_: dafted.models.layers.FTPredictionHead
+in_features: ${task.embed_dim}
