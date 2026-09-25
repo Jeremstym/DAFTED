@@ -66,7 +66,7 @@ class CardiacRecordsPredictionTask:
         """Extract and process from the data module, specifically to handle missing values and categorical attributes.
 
         Args:
-            data: ORCHID data module.
+            data: CARDINAL data module.
             subset: Subset of the data to extract (e.g. "train", "test").
 
         Returns:
@@ -151,7 +151,7 @@ class CardiacRecordsPredictionTask:
         """Fit the model to the training set.
 
         Args:
-            data: ORCHID data module.
+            data: CARDINAL data module.
 
         Returns:
             The fitted model.
@@ -167,7 +167,7 @@ class CardiacRecordsPredictionTask:
         """Measure the model's performance on the test set.
 
         Args:
-            data: ORCHID data module.
+            data: CARDINAL data module.
 
         Returns:
             Dictionary of model's metrics (e.g. accuracy, AUROC, etc.) on the test set.
