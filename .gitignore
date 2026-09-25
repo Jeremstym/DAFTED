@@ -9,3 +9,5 @@ ckpts/
 diagrams/
 
 script.sh
+results_analysis.py
+results_stats.py
