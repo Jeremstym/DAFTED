@@ -1,5 +1,0 @@
-- +experiment=cardinal/xtab-finetune
-- +trainer.max_epochs=100
-- task.predict_losses={ht_severity:{_target_:torch.nn.CrossEntropyLoss}}
-- exclude_tabular_attrs=[ht_severity,ht_grade]
-- ckpt=./didactic-xtab-finetune.ckpt
