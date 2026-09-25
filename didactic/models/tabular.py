@@ -2,7 +2,7 @@ import json
 from typing import Any, Callable, Dict, List, Literal, Optional, Sequence, Tuple, Union
 
 import torch
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR
 from rtdl_revisiting_models import CategoricalEmbeddings, LinearEmbeddings  # type: ignore[import-untyped]
 from torch import Tensor, nn

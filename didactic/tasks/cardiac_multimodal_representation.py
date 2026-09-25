@@ -8,7 +8,7 @@ from typing import Any, Callable, Dict, Literal, Optional, Sequence, Tuple, cast
 import hydra
 import torch
 from dataprocessing.data.augmentation.base import mask_tokens, random_masking
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR, PatientData, PatientDataTarget, PatientDataInference, filter_time_series_attributes
 from dataprocessing.data.cardinal.utils.attributes import TABULAR_CAT_ATTR_LABELS
@@ -388,7 +388,7 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         # # an index out of range error when looking up the embedding of the class in the categorical feature tokenizer
         # tab_attrs_example.update({attr: torch.randint(2, (2,)) for attr in self.tabular_cat_attrs})
         # time_series_attrs_example = {
-        #     (view, attr): torch.randn(2, self.hparams["data_params"].in_shape[OrchidTag.time_series_attrs][1])
+        #     (view, attr): torch.randn(2, self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs][1])
         #     for view, attr in itertools.product(self.hparams["views"], self.hparams["time_series_attrs"])
         # }
 
@@ -405,7 +405,7 @@ class CardiacMultimodalRepresentationTask(SharedStepsTask):
         # an index out of range error when looking up the embedding of the class in the categorical feature tokenizer
         tab_attrs.update({attr: torch.randint(2, (2,)) for attr in self.tabular_cat_attrs})
         time_series_attrs = {
-            (view, attr): torch.randn(2, self.hparams["data_params"].in_shape[OrchidTag.time_series_attrs][1])
+            (view, attr): torch.randn(2, self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs][1])
             for view, attr in itertools.product(self.hparams["views"], self.hparams["time_series_attrs"])
         }
         time_series_notna_mask = torch.ones(

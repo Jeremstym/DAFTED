@@ -5,7 +5,7 @@ from typing import Any, Dict, Iterable, Literal, Sequence, Tuple, Optional, Unio
 import numpy as np
 import torch
 from torch import Tensor
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.cardinal.datapipes import process_patient
 from dataprocessing.data.cardinal.utils.data_dis import check_subsets
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 def encode_patients(
     model: CardiacMultimodalRepresentationTask,
     patients: Iterable[Patient],
-    mask_tag: str = OrchidTag.mask,
+    mask_tag: str = CardinalTag.mask,
     **forward_kwargs,
 ) -> np.ndarray | Dict[str, np.ndarray]:
     """Wrapper around encoder inference to handle boilerplate code (e.g. extracting attributes from patients, etc.).
@@ -112,7 +112,7 @@ def encode_patients_attrs(
 def summarize_patient_attn(
     model: CardiacMultimodalRepresentationTask,
     patient: Patient,
-    mask_tag: str = OrchidTag.mask,
+    mask_tag: str = CardinalTag.mask,
     use_attention_rollout: Optional[bool] = False,
     attention_rollout_kwargs: Optional[Dict[str, Any]] = None,
     head_reduction: Literal["mean", "k_max", "k_min"] = "k_min",

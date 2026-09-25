@@ -3,7 +3,7 @@ from typing import Callable, Dict, List, Literal, Optional, Tuple, Union
 
 import hydra
 import torch
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from omegaconf import DictConfig
 from scipy.special import binom, factorial
 from torch import Tensor, nn

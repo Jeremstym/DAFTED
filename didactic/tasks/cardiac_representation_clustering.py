@@ -243,7 +243,7 @@ def main():
     from argparse import ArgumentParser
     from pathlib import Path
 
-    from dataprocessing.data.cardinal.config import OrchidTag
+    from dataprocessing.data.cardinal.config import CardinalTag
     from dataprocessing.data.cardinal.utils.itertools import Patients
     from dataprocessing.utils.saving import load_from_checkpoint
 
@@ -262,7 +262,7 @@ def main():
     parser.add_argument(
         "--mask_tag",
         type=str,
-        default=OrchidTag.mask,
+        default=CardinalTag.mask,
         help="Tag of the segmentation mask for which to extract the time-series attributes",
     )
     parser.add_argument(

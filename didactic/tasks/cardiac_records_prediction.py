@@ -8,7 +8,7 @@ import pandas as pd
 import torch.nn.functional as F
 from torch import Tensor
 from dataprocessing.data.config import Subset
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.cardinal.data_module import OrchidDataModule
 from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR, PatientData, filter_time_series_attributes

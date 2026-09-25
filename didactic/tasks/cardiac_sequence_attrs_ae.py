@@ -7,7 +7,7 @@ from typing import Dict, Literal, Optional, Sequence, Tuple, TypeVar, Union
 import hydra
 import numpy as np
 import torch
-from dataprocessing.data.cardinal.config import OrchidTag, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.cardinal.datapipes import PatientData, filter_time_series_attributes
 from dataprocessing.tasks.generic import SharedStepsTask
@@ -89,13 +89,13 @@ class CardiacSequenceAttributesAutoencoder(SharedStepsTask):
         ):
             self.register_buffer("_".join((view_enum, attr, stat)), torch.tensor(default_val))
 
-        attrs_shape = self.hparams["data_params"].in_shape[OrchidTag.time_series_attrs]
+        attrs_shape = self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs]
         self.example_input_array: Tensor = torch.randn((2, 1, attrs_shape[1]))
 
     # @property
     # def example_input_array(self) -> Tensor:
     #     """Redefine example input array based only on the time-series attributes modality."""
-    #     attrs_shape = self.hparams["data_params"].in_shape[OrchidTag.time_series_attrs]
+    #     attrs_shape = self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs]
     #     return torch.randn((2, 1, attrs_shape[1]))
 
     @property
@@ -160,7 +160,7 @@ class CardiacSequenceAttributesAutoencoder(SharedStepsTask):
 
     def configure_model(self) -> nn.Module:
         """Configure the network architecture used by the system."""
-        attrs_shape = self.hparams["data_params"].in_shape[OrchidTag.time_series_attrs]
+        attrs_shape = self.hparams["data_params"].in_shape[CardinalTag.time_series_attrs]
         model = hydra.utils.instantiate(self.hparams["model"], input_shape=(1, attrs_shape[-1]))
         return model
 

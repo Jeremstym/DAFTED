@@ -6,7 +6,7 @@ import numpy as np
 import panel as pn
 import param #type: ignore[import-untyped]
 import torch
-from dataprocessing.data.cardinal.config import OrchidTag, TimeSeriesAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
 from dataprocessing.data.cardinal.utils.attributes import TIME_SERIES_ATTR_LABELS
 from dataprocessing.data.cardinal.utils.data_struct import Patient
@@ -23,7 +23,7 @@ hv.extension("bokeh")
 def interactive_cardiac_sequence_attrs_interpolation(
     models: Dict[str, CardiacSequenceAttributesAutoencoder | CardiacSequenceAttributesPCA],
     patients: Patients,
-    mask_tag: str = OrchidTag.mask,
+    mask_tag: str = CardinalTag.mask,
     steps: int = 100,
 ) -> Panel:
     """Organizes an interactive layout of widgets to interpolate between cardiac sequences time-series attributes.
@@ -221,7 +221,7 @@ def main():
     parser.add_argument(
         "--mask_tag",
         type=str,
-        default=OrchidTag.mask,
+        default=CardinalTag.mask,
         help="Tag of the segmentation mask for which to extract the time-series attributes",
     )
     parser.add_argument(

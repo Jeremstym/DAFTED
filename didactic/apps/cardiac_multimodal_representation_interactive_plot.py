@@ -11,7 +11,7 @@ import panel as pn
 import param # type: ignore[import-untyped]
 import seaborn as sns
 from bokeh.models import HoverTool
-from dataprocessing.data.cardinal.config import OrchidTag, TabularAttribute
+from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute
 from dataprocessing.data.cardinal.utils.attributes import TABULAR_ATTR_GROUPS
 from dataprocessing.data.cardinal.utils.data_struct import Patient
 from dataprocessing.data.cardinal.utils.itertools import Patients
@@ -28,7 +28,7 @@ hv.extension("bokeh")
 def interactive_cardiac_multimodal_representation(
     model: CardiacMultimodalRepresentationTask,
     patients: Patients,
-    mask_tag: str = OrchidTag.mask,
+    mask_tag: str = CardinalTag.mask,
     embedding_kwargs: Optional[Dict[str, Any]] = None,
     categorical_attrs_lists: Optional[Dict[str, Dict[str, Sequence[str]]]] = None,
     summarize_patient_attn_fn: Optional[Callable[[CardiacMultimodalRepresentationTask, Patient], np.ndarray]] = None,
@@ -270,7 +270,7 @@ def main():
     parser.add_argument(
         "--mask_tag",
         type=str,
-        default=OrchidTag.mask,
+        default=CardinalTag.mask,
         help="Tag of the segmentation mask for which to extract the time-series attributes",
     )
     parser.add_argument(
