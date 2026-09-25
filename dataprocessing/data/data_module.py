@@ -50,11 +50,9 @@ class VitalDataModule(pl.LightningDataModule, ABC):
         self.save_hyperparameters(ignore="data_params")
 
     def _dataloader(self, subset: Subset, shuffle: bool = False, batch_size: int = None) -> DataLoader:
-        if batch_size is None:
-            batch_size = self.batch_size
         return DataLoader(
             self.datasets[subset],
-            batch_size=batch_size,
+            batch_size=self.batch_size,
             shuffle=shuffle,
             num_workers=self.num_workers,
             pin_memory=True,
@@ -63,50 +61,13 @@ class VitalDataModule(pl.LightningDataModule, ABC):
         )
 
     def train_dataloader(self, get_all: bool = False, shuffle: bool = True) -> DataLoader:  # noqa: D102
-        if get_all:
-            batch_size = len(self.datasets[Subset.TRAIN])
-            return self._dataloader(Subset.TRAIN, shuffle=False, batch_size=batch_size)
         return self._dataloader(Subset.TRAIN, shuffle=shuffle)
-        # return [
-        #     DataLoader(self.datasets[subset], batch_size=None, num_workers=self.num_workers, pin_memory=True)
-        #     for subset in [Subset.TRAIN]
-        # ]
 
     def val_dataloader(self, shuffle: bool = False) -> DataLoader:  # noqa: D102
-        val_loader = self._dataloader(Subset.VAL, batch_size=self.test_batch_size, shuffle=shuffle)
-        train_loader = self._dataloader(Subset.TRAIN, batch_size=len(self.datasets[Subset.TRAIN]))
-        return CombinedLoader({"query": val_loader, "support": train_loader}, mode="max_size_cycle")
-        # return self._dataloader(Subset.VAL, batch_size=self.test_batch_size)
-        # return [
-        #     DataLoader(self.datasets[subset], batch_size=None, num_workers=self.num_workers, pin_memory=True)
-        #     for subset in [Subset.VAL]
-        # ]
+        return self._dataloader(Subset.VAL, batch_size=self.test_batch_size)
 
     def test_dataloader(self, shuffle: bool = False) -> DataLoader:  # noqa: D102
-        # return self._dataloader(Subset.TEST)
-        test_loader = self._dataloader(Subset.TEST, batch_size=self.test_batch_size, shuffle=shuffle)
-        train_loader = self._dataloader(Subset.TRAIN, batch_size=len(self.datasets[Subset.TRAIN]))
-        return CombinedLoader({"query": test_loader, "support": train_loader}, mode="max_size_cycle")
-        # return CombinedLoader({
-        #     "test": DataLoader(
-        #         self.datasets[Subset.TEST],
-        #         batch_size=self.test_batch_size,
-        #         num_workers=self.num_workers,
-        #         pin_memory=True,
-        #     ),
-        #     "train": DataLoader(
-        #         self.datasets[Subset.TRAIN],
-        #         batch_size=len(self.datasets[Subset.TRAIN]),
-        #         num_workers=self.num_workers,
-        #         pin_memory=True,
-        #     ),
-        #     # DataLoader(
-        #     #     self.datasets[Subset.VAL],
-        #     #     batch_size=len(self.datasets[Subset.VAL]),
-        #     #     num_workers=self.num_workers,
-        #     #     pin_memory=True,
-        #     # ),
-        # })
+        return self._dataloader(Subset.TEST)
 
     @classmethod
     def add_argparse_args(cls, parent_parser: ArgumentParser, **kwargs) -> ArgumentParser:  # noqa: D102
