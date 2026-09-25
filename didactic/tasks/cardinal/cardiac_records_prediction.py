@@ -10,7 +10,7 @@ from torch import Tensor
 from dataprocessing.data.config import Subset
 from dataprocessing.data.cardinal.config import CardinalTag, TabularAttribute, TimeSeriesAttribute
 from dataprocessing.data.cardinal.config import View as ViewEnum
-from dataprocessing.data.cardinal.data_module import OrchidDataModule
+from dataprocessing.data.cardinal.data_module import CardinalDataModule
 from dataprocessing.data.cardinal.datapipes import MISSING_CAT_ATTR, PatientData, filter_time_series_attributes
 from dataprocessing.utils.config import register_omegaconf_resolvers
 from dotenv import load_dotenv
@@ -62,7 +62,7 @@ class CardiacRecordsPredictionTask:
             self.use_time_series = False
             self.views, self.time_series_attrs = (), ()
 
-    def _prepare_data_subset(self, data: OrchidDataModule, subset: str) -> Tuple[pd.DataFrame, np.ndarray]:
+    def _prepare_data_subset(self, data: CardinalDataModule, subset: str) -> Tuple[pd.DataFrame, np.ndarray]:
         """Extract and process from the data module, specifically to handle missing values and categorical attributes.
 
         Args:
@@ -147,7 +147,7 @@ class CardiacRecordsPredictionTask:
 
         return tab_df, target
 
-    def fit(self, data: OrchidDataModule) -> "CardiacRecordsPredictionTask":
+    def fit(self, data: CardinalDataModule) -> "CardiacRecordsPredictionTask":
         """Fit the model to the training set.
 
         Args:
@@ -163,7 +163,7 @@ class CardiacRecordsPredictionTask:
 
         return self
 
-    def score(self, data: OrchidDataModule) -> Dict[str, float]:
+    def score(self, data: CardinalDataModule) -> Dict[str, float]:
         """Measure the model's performance on the test set.
 
         Args:
