@@ -8,7 +8,7 @@ Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/Jeremstym/DAFTED.git](https://github.com/Jeremstym/DAFTED.git)
+   git clone https://github.com/Jeremstym/DAFTED.git
    cd DAFTED
 
 2. Install the depedencies
