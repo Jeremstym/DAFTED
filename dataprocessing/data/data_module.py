@@ -8,11 +8,8 @@ from dataprocessing.data.config import DataParameters, Subset
 from torch.utils.data import DataLoader, Dataset
 from lightning.pytorch.utilities.combined_loader import CombinedLoader
 
-# def custom_collate(batch):
-#     # Find all possible keys
-#         all_keys = set().union(*(d.keys() for d in batch))
-#         collated = {k: [d.get(k, None) for d in batch] for k in all_keys}
-#         return collated
+# This implementation is based on the following reference:
+# Painchaud, N, et al. « Fusing Echocardiography Images and Medical Records for Continuous Patient Stratification »
 
 
 class VitalDataModule(pl.LightningDataModule, ABC):
