@@ -149,6 +149,11 @@ This project is released under the [Apache-2.0 license](LICENSE). The generic tr
 adapted from the [vital](https://github.com/vitalab/vital) library (Apache-2.0). The IRENE baseline in `IRENE/` comes
 from its [original implementation](https://github.com/RL4M/IRENE) and keeps its own license.
 
+
+The refactoring of this repository for its public release (dataset schema, synthetic data module, decoupling from
+the private CARDINAL code) and this README were developed with the help of
+[Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant.
+
 <!--
 ## Citation
 
