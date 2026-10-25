@@ -1,0 +1,28 @@
+_target_: dafted.models.transformer.FT_Interleaved_Alignment
+
+d_token: ${task.embed_dim}
+n_self_blocks: 3
+n_cross_blocks: 2
+n_bidirectional_blocks: 0
+attention_n_heads: 8
+attention_dropout: 0.2
+attention_initialization: kaiming
+attention_normalization:
+  _target_: torch.nn.LayerNorm
+  normalized_shape: ${task.embed_dim}
+  _partial_: True
+ffn_d_hidden: ${task.embed_dim}
+ffn_dropout: 0.1
+ffn_activation:
+  _target_: dafted.models.layers.ReGLU
+  _partial_: True
+ffn_normalization:
+  _target_: torch.nn.LayerNorm
+  normalized_shape: ${task.embed_dim}
+  _partial_: True
+residual_dropout: 0.1
+prenormalization: True
+first_prenormalization: ${task.first_prenormalization}
+freeze_self_attention: False
+n_tabular_attrs: ${n_tabular_attrs}
+n_time_series_attrs: ${n_time_series_attrs}

@@ -1,0 +1,49 @@
+# @package _global_
+
+defaults:
+  - cardinal/cardiac-multimodal-representation
+  - override /task/model/encoder: baseline-mlp-concat
+
+trainer:
+  max_steps: 2000
+
+exclude_tabular_attrs: ${oc.dict.keys:task.predict_losses}
+
+task:
+  predict_losses: ???
+  ordinal_mode: False
+  contrastive_loss: null
+  contrastive_loss_weight: 0
+  mtr_p: [ 0.6, 0 ]
+
+  tabular_encoder:
+    _target_: dafted.models.baselines.TabularMLP
+    in_features: ${n_tabular_attrs}
+    out_features: ${task.embed_dim}
+    n_layers: 2
+    d_token: 192
+    dropout: 0.1
+    _partial_: True
+
+  tabular_tokenizer:
+    _target_: torch.nn.Identity
+
+  cls_token: False
+  # Architecture parameters to define the same architecture as XTab
+  embed_dim: 192
+  model:
+    encoder:
+      d_token: ${task.embed_dim}
+
+  # Default to the light finetuning describe in XTab's paper
+  optim:
+    optimizer:
+      _target_: torch.optim.AdamW
+      lr: 1e-4
+      weight_decay: 1e-5
+
+
+# Change checkpoint loading defaults to:
+ckpt: ??? # Make it mandatory to provide a checkpoint
+weights_only: True  # Only load the weights and ignore the hyperparameters
+strict: False # Only load weights where they match the defined network, to only some changes (e.g. heads, etc.)

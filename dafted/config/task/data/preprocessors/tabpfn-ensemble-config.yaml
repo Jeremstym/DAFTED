@@ -1,0 +1,10 @@
+_target_: tabpfn.preprocessing.EnsembleConfig.generate_for_classification
+n: 1 # No ensembling aggregation for our pipeline
+add_fingerprint_feature: True
+feature_shift_decoder: shuffle
+polynomial_features: no
+subsample_size: null
+class_shift_method: null
+n_classes: 5
+random_state: ${seed}
+_partial_: True

@@ -1,0 +1,8 @@
+# Build the projection head as an MLP with a single hidden layer and constant width, as proposed in
+# https://arxiv.org/abs/2106.15147
+_target_: dafted.models.baselines.MLP
+in_features: ${task.embed_dim}
+out_features: ${task.embed_dim}
+n_layers: 1
+d_token: ${task.embed_dim}
+dropout: 0

@@ -1,0 +1,3 @@
+transformer_encoder_freeze:
+  _target_: dafted.callbacks.finetune.TransformerEncoderFreeze
+  finetune_layers: null

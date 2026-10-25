@@ -1,0 +1,35 @@
+# Schema of the synthetic dataset bundled with DAFTED (see `dafted.data.synthetic.SyntheticDataModule`).
+#
+# A schema declares the attributes available in a dataset. To use DAFTED on your own data, copy this file, describe
+# your dataset in it, and point the `DAFTED_SCHEMA` environment variable to your copy (e.g. in a `.env` file).
+
+# Views (e.g. echocardiography acquisition views) for which time-series attributes are available.
+# Leave empty if your dataset only contains tabular data.
+views:
+  - view_0
+  - view_1
+
+# Attributes that are temporal sequences of values, available for each view.
+time_series_attrs:
+  - ts_0
+  - ts_1
+  - ts_2
+
+# Scalar attributes of each patient, e.g. from the patient's record.
+# The type of each attribute is either `numerical`, or the list of the labels of a categorical attribute.
+# Categorical values are encoded by the index of their label in that list.
+tabular_attrs:
+  num_0: numerical
+  num_1: numerical
+  num_2: numerical
+  num_3: numerical
+  num_4: numerical
+  num_5: numerical
+  bin_0: [false, true]
+  bin_1: [false, true]
+  cat_0: [a, b, c]
+  target: [low, medium, high]
+
+# Subset of the categorical attributes whose labels are ordered.
+ordinal_attrs:
+  - target

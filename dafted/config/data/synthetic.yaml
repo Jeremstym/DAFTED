@@ -1,0 +1,26 @@
+# Synthetic dataset following the schema in `dafted/data/schemas/synthetic.yaml`.
+# Useful to check that everything runs end-to-end, and as a template to plug in your own data module.
+defaults:
+  - default
+
+_target_: dafted.data.synthetic.SyntheticDataModule
+
+num_workers: 0
+
+# Same interface as the CARDINAL data module, so that experiments configs can select views/attributes in the same way
+patients_kwargs:
+  views: null  # Defaults to all the views in the schema
+
+process_patient_kwargs:
+  tabular_attrs: null  # Defaults to all the tabular attributes in the schema
+  time_series_attrs: null  # Defaults to all the time-series attributes in the schema
+
+num_patients:
+  train: 512
+  val: 128
+  test: 128
+time_series_len: 64
+latent_dim: 4
+missing_rate: 0.1
+noise_std: 0.3
+seed: 0

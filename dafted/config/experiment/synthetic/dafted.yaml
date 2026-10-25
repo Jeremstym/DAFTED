@@ -1,0 +1,90 @@
+# @package _global_
+
+# Trains DAFTED from scratch on the synthetic dataset, to predict the `target` attribute from the other tabular
+# attributes and the time-series attributes. Copy this file to define experiments on your own dataset.
+
+defaults:
+  - cardinal/cardiac-multimodal-representation
+  - override /data: synthetic
+  - override /task/model/encoder: dafted-encoder
+  - override /logger: tensorboard
+
+trainer:
+  max_steps: 500
+  devices: 1
+  accelerator: auto
+
+data:
+  batch_size: 64
+  patients_kwargs:
+    views: [view_0, view_1]
+  process_patient_kwargs:
+    tabular_attrs: [num_0, num_1, num_2, num_3, num_4, num_5, bin_0, bin_1, cat_0, target]
+    time_series_attrs: [ts_0, ts_1, ts_2]
+
+# Do not feed the attributes to predict as inputs of the model
+exclude_tabular_attrs: ${oc.dict.keys:task.predict_losses}
+
+task:
+  predict_losses:
+    target:
+      _target_: torch.nn.CrossEntropyLoss
+  ordinal_mode: False
+  contrastive_loss:
+    _target_: dafted.models.losses.DecouplingLoss
+    temperature: 0.1
+  contrastive_loss_weight: 1.0
+  orthogonal_loss:
+    _target_: dafted.models.losses.OrthogonalLoss
+  orthogonal_loss_weight: 0.0
+  reconstruction_loss:
+    _target_: dafted.models.losses.ReconstructionLoss
+  reconstruction_loss_weight: 0.0
+  inter_sample_loss:
+    _target_: dafted.models.losses.SupConCLIPLoss
+    temperature: 0.1
+  inter_sample_loss_weight: 1.0
+  cls_token: True
+  ts_cls_token: False
+  tabular_double_tokenizer: False
+  tabular_shared_tokenizer:
+    _target_: dafted.models.tabular.TabularEmbedding
+    d_token: ${task.embed_dim}
+
+  embed_dim: 192
+
+  optim:
+    optimizer:
+      _target_: torch.optim.AdamW
+      lr: 1e-4
+      weight_decay: 1e-5
+
+# Unimodal encoders used by the DAFTED encoder (see `task/model/encoder/dafted-encoder.yaml`)
+tabular_unimodal_encoder: &unimodal_encoder
+  _target_: dafted.models.transformer.FT_Transformer
+  d_token: ${task.embed_dim}
+  n_self_blocks: 3
+  n_cross_blocks: 0
+  n_bidirectional_blocks: 0
+  attention_n_heads: 8
+  attention_dropout: 0.2
+  attention_initialization: kaiming
+  attention_normalization:
+    _target_: torch.nn.LayerNorm
+    normalized_shape: ${task.model.encoder.d_token}
+    _partial_: True
+  ffn_d_hidden: ${task.model.encoder.d_token}
+  ffn_dropout: 0.1
+  ffn_activation:
+    _target_: dafted.models.layers.ReGLU
+    _partial_: True
+  ffn_normalization:
+    _target_: torch.nn.LayerNorm
+    normalized_shape: ${task.model.encoder.d_token}
+    _partial_: True
+  residual_dropout: 0.1
+  prenormalization: True
+  first_prenormalization: ${task.first_prenormalization}
+  _partial_: True
+
+ts_unimodal_encoder: *unimodal_encoder
